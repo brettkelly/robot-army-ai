@@ -848,7 +848,13 @@
         <div class="container">
             <h2>Ready to Deploy Your Robot?</h2>
             <p>We're onboarding a small group of beta users. Get early access and help shape the future of personal AI assistants.</p>
-            <a href="mailto:hello@robotarmy.dev?subject=AI%20Assistant%20Interest" class="btn btn-primary">Request Early Access →</a>
+            <form name="early-access" method="POST" data-netlify="true" style="max-width: 400px; margin: 0 auto;">
+                <input type="hidden" name="form-name" value="early-access">
+                <input type="text" name="name" placeholder="Your name" required style="width: 100%; padding: 14px 16px; margin-bottom: 12px; border: none; border-radius: 8px; font-size: 1rem; font-family: inherit;">
+                <input type="email" name="email" placeholder="Your email" required style="width: 100%; padding: 14px 16px; margin-bottom: 12px; border: none; border-radius: 8px; font-size: 1rem; font-family: inherit;">
+                <textarea name="message" placeholder="Tell us about your business (optional)" rows="3" style="width: 100%; padding: 14px 16px; margin-bottom: 16px; border: none; border-radius: 8px; font-size: 1rem; font-family: inherit; resize: vertical;"></textarea>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Request Early Access →</button>
+            </form>
             <p style="margin-top: 24px; font-size: 0.95rem; opacity: 0.7;">
                 Or email us directly: <a href="mailto:hello@robotarmy.dev" style="color: var(--accent);">hello@robotarmy.dev</a>
             </p>
