@@ -614,13 +614,84 @@
             }
         }
 
-        @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 2rem;
+        /* Mobile menu */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
+            margin: 5px 0;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                z-index: 101;
             }
 
             header nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--bg-white);
+                padding: 80px 32px 32px;
+                box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+                transition: right 0.3s ease;
+                display: flex;
+                flex-direction: column;
+            }
+
+            header nav.active {
+                right: 0;
+            }
+
+            header nav a {
+                margin: 0 0 24px 0;
+                font-size: 1.1rem;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            .menu-overlay {
                 display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 99;
+            }
+
+            .menu-overlay.active {
+                display: block;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2rem;
             }
 
             .btn-secondary {
@@ -641,14 +712,20 @@
     <header>
         <div class="container">
             <a href="https://robotarmy.info" class="logo"><img src="https://robotarmy.info/wp-content/uploads/2023/12/ra-horiz.png" alt="Robot Army" width="132" height="40"></a>
-            <nav>
+            <nav id="nav">
                 <a href="#features">Features</a>
                 <a href="#included">What's Included</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#faq">FAQ</a>
                 <a href="#contact">Contact</a>
             </nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
+        <div class="menu-overlay" id="menuOverlay"></div>
     </header>
 
     <section class="hero">
@@ -924,5 +1001,30 @@
             <p>© 2026 <a href="https://robotarmy.dev">Robot Army Industries</a>. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const nav = document.getElementById('nav');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        function toggleMenu() {
+            menuToggle.classList.toggle('active');
+            nav.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // Close menu when clicking a nav link
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (nav.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
